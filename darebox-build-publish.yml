@@ -1,0 +1,66 @@
+# For use with Darebox to build and deploy app to server
+# After first run, create these in repo settings:
+# WATCHTOWER_URL (variable), WATCHTOWER_TOKEN (secret)
+
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  WATCHTOWER_URL: ${{ vars.WATCHTOWER_URL }}
+  WATCHTOWER_TOKEN: ${{ secrets.WATCHTOWER_TOKEN }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions: # for GITHUB_TOKEN
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase repo name for image, and extract project name
+        shell: bash
+        env:
+          RAW_IMAGE_NAME: ${{ env.REGISTRY }}/${{ github.repository }}:latest
+          REPO_NAME: ${{ github.repository }}
+        run: |
+          echo "FULL_IMAGE_NAME=${RAW_IMAGE_NAME,,}" >> $GITHUB_ENV
+          project=${REPO_NAME#*/}; echo "PROJECT_NAME=${project,,}" >> $GITHUB_ENV
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          build-args: GIT_COMMIT_SHA=${{ github.sha }}
+          tags: ${{ env.FULL_IMAGE_NAME }}
+
+      - name: Trigger Watchtower for instant update
+        if: ${{ env.WATCHTOWER_URL != '' && env.WATCHTOWER_TOKEN != '' }}
+        run: |
+          echo "Triggering Watchtower HTTP API..."
+          curl "${WATCHTOWER_URL}?image=${FULL_IMAGE_NAME}" \
+            -H "Authorization: Bearer ${WATCHTOWER_TOKEN}"
+
+      - name: Purge old CR packages (container images)
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ env.PROJECT_NAME }}
+          package-type: container
+          min-versions-to-keep: 2
