@@ -2,7 +2,7 @@
 
 A really simple configurator for hassle-free self-hosting of a web app or API on a server.
 
-Beachbox makes it super easy to host an auto-updating app (containerized) on a virtual or bare-metal server of any size at a fraction of the cost compared to cloud platforms, blazing fast performance, full control, and no vendor lock-in.
+Beachbox makes it super easy to host an auto-updating app (containerized) on a virtual or bare-metal server of any size at a fraction of the cost compared to cloud platforms, with blazing fast performance, full control, and no vendor lock-in.
 
 A single server for a single web service is powerful enough in 99% of production use-cases. No AWS, Heroku or Kubernetes required for an app even with thousands of users.
 
