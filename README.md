@@ -44,21 +44,21 @@ A single server for a single web service is powerful enough in 99% of production
 
     Within a few seconds your app will be deployed and accessible over HTTPS.
 
-3. Create these in GitHub repo settings:
+3. Create these in GitHub repo settings for app container auto-update (via Watchtower HTTP API):
 
     Variable:
     ```conf
-    WATCHTOWER_URL = https://hostname/package/update
+    WATCHTOWER_URL = https://HOSTNAME/package/update
     ```
-    *(change hostname part to domain name)*
+    *(change HOSTNAME to domain name)*
 
     Secret:
     ```conf
     WATCHTOWER_TOKEN = ######
     ```
-    *(change placeholder with a strong random string)*
+    *(change placeholder to the same strong random string used with configuration script)*
 
-    Now you can push commits or manually run the workflow to publish latest package and auto-update app container image.
+    Pushed commits or manually run workflow will publish latest package and auto-update the app container.
 
 ## Components
 
