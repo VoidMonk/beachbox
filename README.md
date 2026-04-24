@@ -1,8 +1,8 @@
-# Darebox
+# Beachbox
 
-Darebox is a really simple configurator for quickest and easiest self-hosting of a web app or API on a server.
+A really simple configurator for hassle-free self-hosting of a web app or API on a server.
 
-It makes it super easy to host an auto-updating app container on a virtual or bare-metal server of any size at a fraction of the cost compared to cloud platforms, blazing fast performance, full control, and no vendor lock-in.
+Beachbox makes it super easy to host an auto-updating app (containerized) on a virtual or bare-metal server of any size at a fraction of the cost compared to cloud platforms, blazing fast performance, full control, and no vendor lock-in.
 
 A single server for a single web service is powerful enough in 99% of production use-cases. No AWS, Heroku or Kubernetes required for an app even with thousands of users.
 
@@ -18,20 +18,20 @@ A single server for a single web service is powerful enough in 99% of production
 ## Requirements
 
 * Domain name(s) for the app
-* A server (VM, VPS, cloud or bare-metal) with minimum 2GB RAM, 1 CPU and 40GB storage ([Vultr](https://www.vultr.com/) or [Hetzner](https://www.hetzner.com/) recommended for servers, or any other provider with shell access). For domain mapping and SSL certificate provisioning, add an `A` or `AAAA` type DNS record in your domain provider's control panel to point the domain name(s) to the server IP address.
+* A server (VM, VPS, cloud or bare-metal) with minimum 2GB RAM, 1 CPU and 40GB storage ([Vultr](https://www.vultr.com/) or [Hetzner](https://www.hetzner.com/) recommended for servers, or any other provider). For domain mapping and SSL certificate provisioning, add an `A` or `AAAA` type DNS record in your domain provider's control panel to point the domain name(s) to the server IP address.
 * Linux and Docker Engine installed
 * GitHub for app repo (private or public) and packages
 
 ## Usage
 
-1. Optional: Commit code and Dockerfile to app repo. Then, copy the build-publish workflow to the repo, review/edit if needed, and push a commit or manually run the workflow to publish a package (container image) the first time.
+1. Optional: Push code and Dockerfile to app repo. Then, copy the provided build-publish workflow to the repo, review/edit if needed, and push a commit or manually run the workflow to publish a package (container image) the first time.
 
 2. Fetch the configuration shell script (details below) on the server and run it:
 
     ```sh
-    wget -q https://github.com/VoidMonk/darebox/raw/main/darebox.sh
-    chmod +x darebox.sh
-    ./darebox.sh
+    wget -q https://github.com/VoidMonk/beachbox/raw/main/beachbox.sh
+    chmod +x beachbox.sh
+    ./beachbox.sh
     ```
 
     Follow the prompts to have the Docker Compose file, Caddyfile and their common single `.env` file generated.
@@ -62,7 +62,7 @@ A single server for a single web service is powerful enough in 99% of production
 
 ## Components
 
-* **Configurator shell script** - an interactive tool that generates necessary config files and includes relevant containers for a ready-to-run multi-container environment:
+* **Configurator shell script** - an interactive tool that generates necessary config files and includes relevant containers for a ready-to-run multi-container environment. It generates:
     * Docker Compose file with..
         - [Caddy](https://github.com/caddyserver/caddy) web server (reverse proxy + automatic HTTPS)
         - [Watchtower](https://github.com/nicholas-fedor/watchtower/) (periodic and triggered container auto-updates)

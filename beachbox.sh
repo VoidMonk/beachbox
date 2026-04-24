@@ -1,11 +1,11 @@
 #!/bin/bash
-# Darebox - really simple configurator for quickest and easiest self-hosting of a web app or API on a server.
+# Beachbox - really simple configurator for quickest and easiest self-hosting of a web app or API on a server.
 # Generates Docker Compose file and Caddyfile for ready-to-run multi-container environment.
-# https://github.com/VoidMonk/darebox
+# https://github.com/VoidMonk/beachbox
 set -o nounset
 set -o errexit
 
-echo -e "Darebox - app container definition generator (Docker Compose file and Caddyfile)\n"
+echo -e "Beachbox - app container definition generator (Docker Compose file and Caddyfile)\n"
 
 read -n 1 -r -p "* Login to container registry? (y/n): " CR_LOGIN_ANS
 echo
@@ -62,7 +62,7 @@ echo -e "Env file created!\n"
 
 echo "Creating Caddyfile.."
 cat << 'EOF' > Caddyfile
-# Caddyfile is auto-generated (via darebox), mounted (via Docker Compose) and auto-loaded when its container starts
+# Caddyfile is auto-generated (via beachbox), mounted (via Docker Compose) and auto-loaded when its container starts
 # Changes for a running container can be manually applied with 'docker exec -w /etc/caddy caddy_container_id caddy reload' (get container id with 'docker ps')
 
 {$ALL_DOMAINS} {
@@ -88,7 +88,7 @@ echo -e "Caddyfile created!\n"
 
 echo "Creating Docker compose file.."
 cat << 'EOF' > compose.yml
-# Docker Compose file is auto-generated (via darebox)
+# Docker Compose file is auto-generated (via beachbox)
 # Start all services with 'docker compose up -d'
 
 services:

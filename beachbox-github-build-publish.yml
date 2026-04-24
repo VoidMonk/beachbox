@@ -1,4 +1,4 @@
-# For use with Darebox to build and deploy app to server
+# For use with Beachbox to build and deploy app to server
 # After first run, create these in repo settings:
 # WATCHTOWER_URL (variable), WATCHTOWER_TOKEN (secret)
 
