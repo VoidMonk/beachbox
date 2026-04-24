@@ -26,7 +26,7 @@ A single server for a single web service is powerful enough in 99% of production
 
 1. Optional: Push code and Dockerfile to app repo. Then, copy the provided build-publish workflow to the repo, review/edit if needed, and push a commit or manually run the workflow to publish a package (container image) the first time.
 
-2. Fetch the configuration shell script (details below) on the server and run it:
+2. Fetch the configurator shell script (details below) on the server and run it:
 
     ```sh
     wget -q https://github.com/VoidMonk/beachbox/raw/main/beachbox.sh
