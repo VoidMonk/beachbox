@@ -44,7 +44,7 @@ else
     WEBHOOK_DOMAIN_ANS=$ALL_DOMAINS_ANS
 fi
 
-read -s -p "* Enter the auth token for Watchtower webhook (HTTP API): " WEBHOOK_TOKEN_ANS
+read -s -p "* Enter the auth token (strong random string) for Watchtower webhook (HTTP API): " WEBHOOK_TOKEN_ANS
 if [ -z "$WEBHOOK_TOKEN_ANS" ]; then
     echo 'Token cannot be blank'
     exit 1
