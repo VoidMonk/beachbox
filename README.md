@@ -34,7 +34,7 @@ A single server for a single web service is powerful and reliable enough for mos
     ./beachbox.sh
     ```
 
-    Follow the prompts to have the Docker Compose file, Caddyfile and their common single `.env` file generated.
+    Follow the prompts to have the Docker Compose file, `Caddyfile` and their common single `.env` file generated.
 
     Then, start all containers:
 
@@ -67,7 +67,8 @@ A single server for a single web service is powerful and reliable enough for mos
         - [Caddy](https://github.com/caddyserver/caddy) web server (reverse proxy + automatic HTTPS)
         - [Watchtower](https://github.com/nicholas-fedor/watchtower/) (periodic and triggered container auto-updates)
         - your app container
-    * Caddyfile for Caddy
+    * `Caddyfile` for Caddy
+    * A common single `.env` file
 
 * **GitHub Actions workflow** - a CI/CD workflow to build and publish app container image to GitHub packages (container registry), and trigger app container auto-update (via Watchtower HTTP API).
 
