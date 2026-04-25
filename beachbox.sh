@@ -7,6 +7,25 @@ set -o errexit
 
 echo -e "Beachbox - app container definition generator (Docker Compose file and Caddyfile)\n"
 
+# Check if Docker is installed
+if ! command -v docker >/dev/null 2>&1; then
+    echo "Error: Docker is not installed or not in PATH."
+    echo "Please install Docker before running this script."
+    exit 1
+fi
+
+# Check if Docker Compose is available (standalone or as 'docker compose')
+if docker compose version >/dev/null 2>&1; then
+    :
+elif command -v docker-compose >/dev/null 2>&1; then
+    :
+else
+    echo "Error: Docker Compose is not installed or not in PATH."
+    echo "Please install Docker Compose before running this script."
+    exit 1
+fi
+
+# Login to container registry
 read -n 1 -r -p "* Login to container registry? (y/n): " CR_LOGIN_ANS
 echo
 if [[ "$CR_LOGIN_ANS" =~ ^[Yy]$ ]]; then
