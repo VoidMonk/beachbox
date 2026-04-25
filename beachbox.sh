@@ -149,7 +149,7 @@ services:
       - "9000:9000" # Watchtower HTTP API exposed on VM
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./.docker/config.json:/config.json
+      - ~/.docker/config.json:/config.json
     environment:
       - WATCHTOWER_HTTP_API_TOKEN=${WEBHOOK_TOKEN}
     command: >
