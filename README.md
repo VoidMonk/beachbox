@@ -34,7 +34,7 @@ A single server for a single web service is powerful and reliable enough for mos
     ./beachbox.sh
     ```
 
-    Follow the prompts to have the Docker Compose file, `Caddyfile` and their common single `.env` file generated.
+    Follow the prompts to have the Docker Compose file, `Caddyfile`, persistent SQLite database file, and their common single `.env` file generated. The SQLite prompt defaults to mounting `database.sqlite` at `/app/database.sqlite` in the app container; enter another absolute container path if your app expects its database elsewhere. If `database.sqlite` already exists from an earlier installation, the configurator preserves it rather than replacing or truncating it.
 
     Then, start all containers:
 
@@ -68,6 +68,7 @@ A single server for a single web service is powerful and reliable enough for mos
         - [Watchtower](https://github.com/nicholas-fedor/watchtower/) (periodic and triggered container auto-updates)
         - your app container
     * `Caddyfile` for Caddy configuration
+    * A persistent `database.sqlite` file bind-mounted at the app's configured database path
     * A common single `.env` file with shared environment variables
 
 * **GitHub Actions workflow** - a CI/CD workflow to build and publish app container image to GitHub packages (container registry), and trigger app container auto-update (via Watchtower HTTP API).
