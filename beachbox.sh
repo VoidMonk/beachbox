@@ -48,6 +48,13 @@ if [ -z "$APP_NAME_ANS" ]; then
     exit 1
 fi
 
+read -r -p "* Enter SQLite database path in app container [/app/database.sqlite]: " SQLITE_DATABASE_PATH_ANS
+SQLITE_DATABASE_PATH_ANS=${SQLITE_DATABASE_PATH_ANS:-/app/database.sqlite}
+if [[ "$SQLITE_DATABASE_PATH_ANS" != /* ]]; then
+    echo 'Error: SQLite database path must be absolute'
+    exit 1
+fi
+
 read -r -p "* Enter one or more domain names (space separated) for app container: " ALL_DOMAINS_ANS
 if [ -z "$ALL_DOMAINS_ANS" ]; then
     echo 'Error: Domains cannot be blank'
@@ -91,8 +98,21 @@ APP_NAME="$APP_NAME_ANS"
 ALL_DOMAINS="$ALL_DOMAINS_ANS"
 WEBHOOK_DOMAIN="$WEBHOOK_DOMAIN_ANS"
 WEBHOOK_TOKEN="$WEBHOOK_TOKEN_ANS"
+SQLITE_DATABASE_PATH="$SQLITE_DATABASE_PATH_ANS"
 EOF
 echo -e "env file created!\n"
+
+# Create the bind-mounted database file only for a new installation
+if [ -e database.sqlite ]; then
+    if [ ! -f database.sqlite ]; then
+        echo 'Error: database.sqlite exists but is not a regular file'
+        exit 1
+    fi
+    echo -e "Existing database.sqlite preserved.\n"
+else
+    touch database.sqlite
+    echo -e "database.sqlite created!\n"
+fi
 
 echo "Creating Caddyfile.."
 cat << 'EOF' > Caddyfile
@@ -133,6 +153,8 @@ services:
     restart: always
     ports:
       - "8080:8080"
+    volumes:
+      - ./database.sqlite:${SQLITE_DATABASE_PATH}
 
   # Caddy (reverse proxy + HTTPS via HTTP challenge)
   caddy:
