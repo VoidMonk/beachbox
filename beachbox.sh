@@ -151,8 +151,6 @@ services:
     image: ghcr.io/${OWNER_PROJECT}:latest
     container_name: ${APP_NAME}
     restart: always
-    ports:
-      - "8080:8080"
     volumes:
       - ./database.sqlite:${SQLITE_DATABASE_PATH}
 
@@ -179,8 +177,6 @@ services:
     image: nickfedor/watchtower:latest
     container_name: watchtower
     restart: unless-stopped
-    ports:
-      - "9000:9000" # Watchtower HTTP API exposed on VM
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ~/.docker/config.json:/config.json
