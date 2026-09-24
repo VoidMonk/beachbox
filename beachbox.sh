@@ -185,7 +185,7 @@ services:
     command: >
       --cleanup
       --interval 86400
-      --http-api-update
+      --http-api-endpoints "update"
       --http-api-port "9000"
       --http-api-periodic-polls
       --stop-timeout 1s
