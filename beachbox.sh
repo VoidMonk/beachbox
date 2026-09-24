@@ -191,7 +191,6 @@ services:
       --stop-timeout 1s
       --include-stopped
       --revive-stopped
-      --rolling-restart
 
 volumes:
   caddy_data:
